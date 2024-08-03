@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quotes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: hsl(50, 100%, 90%);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #quote-box {
+            background: linear-gradient(180deg, hsl(120, 100%, 80%), hsl(180, 100%, 70%));
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.5);
+            text-align: center;
+            max-width: 600px;
+            min-width: 300px;
+        }
+        #quote-box p {
+            font-size: 1.5rem;
+            margin: 0;
+            color: hsla(0, 0%, 0%, 0.75);
+            font-weight: bold;
+        }
+        #quote-box button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: hsl(340, 100%, 50%);
+            color: hsl(0, 0%, 100%);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #quote-box button:hover {
+            background-color: hsl(340, 100%, 40%);
+        }
+        #quote-box button:active {
+            background-color: hsl(340, 100%, 30%);
+        }
+    </style>
+</head>
+<body>
+    <div id="quote-box">
+        <p id="quote">Loading...</p>
+        <button id="new-quote">New Quote</button>
+    </div>
+
+    <script>
+        async function fetchQuote() {
+            try {
+                const response = await fetch('https://api.quotable.io/random');
+                const data = await response.json();
+                document.getElementById('quote').textContent = data.content;
+            } catch (error) {
+                document.getElementById('quote').textContent = 'Failed to fetch a new quote. Please try again later.';
+            }
+        }
+
+        document.getElementById('new-quote').addEventListener('click', fetchQuote);
+        fetchQuote();
+    </script>
+</body>
+</html>
